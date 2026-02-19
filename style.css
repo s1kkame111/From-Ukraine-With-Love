@@ -1,6 +1,6 @@
-/* ========================== */
+/* ============================= */
 /* RESET */
-/* ========================== */
+/* ============================= */
 
 * {
     margin: 0;
@@ -12,100 +12,116 @@ body {
     overflow: hidden;
     height: 100vh;
     font-family: 'Cormorant Garamond', serif;
-    background: #000;
 }
 
-/* ========================== */
-/* SKY - CINEMATIC */
-/* ========================== */
+/* ============================= */
+/* SKY BACKGROUND */
+/* ============================= */
 
 .sky {
     position: relative;
     width: 100%;
     height: 100vh;
-    background: radial-gradient(circle at 50% 20%, #5c56a8 0%, #554E94 40%, #4B4583 100%);
+    background: linear-gradient(
+        to bottom,
+        #4B4583 0%,
+        #554E94 40%,
+        #5c56a8 70%
+    );
     overflow: hidden;
 }
 
-/* cinematic soft moving haze */
+/* subtle gradient glow overlay */
 .sky::after {
     content: "";
     position: absolute;
-    width: 200%;
-    height: 200%;
-    background: radial-gradient(circle at 40% 30%, rgba(255,255,255,0.08), transparent 60%);
-    animation: skyBreath 18s infinite alternate ease-in-out;
+    width: 150%;
+    height: 150%;
+    background: radial-gradient(circle at 50% 20%, rgba(255,255,255,0.05), transparent 60%);
+    animation: skyBreath 12s infinite alternate ease-in-out;
 }
 
 @keyframes skyBreath {
-    0% { transform: scale(1); opacity: 0.3; }
-    100% { transform: scale(1.1); opacity: 0.6; }
+    0% { opacity: 0.4; }
+    100% { opacity: 0.7; }
 }
 
-/* ========================== */
-/* DRAMATIC STAR LAYERS */
-/* ========================== */
+/* ============================= */
+/* BUILDINGS */
+/* ============================= */
 
-.star-layer {
+.buildings {
     position: absolute;
+    bottom: 0;
     width: 100%;
-    height: 100%;
+    height: 18%;
+    background: #282131;
+    clip-path: polygon(
+        0% 100%, 0% 70%, 8% 60%, 12% 70%, 
+        18% 55%, 25% 70%, 33% 58%, 40% 75%,
+        50% 60%, 60% 80%, 70% 65%, 80% 72%,
+        90% 60%, 100% 75%, 100% 100%
+    );
 }
 
-.star-layer span {
+/* ============================= */
+/* STARS */
+/* ============================= */
+
+.stars span {
     position: absolute;
     background: white;
     border-radius: 50%;
     opacity: 0;
-    animation: twinkle 4s infinite ease-in-out;
+    animation: starFade 2s forwards ease-in-out;
 }
 
-.layer1 span { animation-duration: 3s; }
-.layer2 span { animation-duration: 5s; }
-.layer3 span { animation-duration: 7s; }
-
-@keyframes twinkle {
+@keyframes starFade {
     0% { opacity: 0; transform: scale(0.5); }
-    50% { opacity: 1; transform: scale(1); }
-    100% { opacity: 0.4; }
+    50% { opacity: 1; }
+    100% { opacity: 0.7; }
 }
 
-/* ========================== */
-/* CRESCENT MOON */
-/* ========================== */
+/* ============================= */
+/* MOON */
+/* ============================= */
 
-.crescent {
+.moon {
     position: absolute;
     bottom: 18%;
     left: 50%;
-    width: 170px;
-    height: 170px;
-    transform: translateX(-50%) translateY(250px);
+    transform: translateX(-50%) translateY(200px);
+    width: 160px;
+    height: 160px;
     border-radius: 50%;
-    background: #FAF8FB;
-    box-shadow: 0 0 40px rgba(250,248,251,0.6);
+    background: #B7B7B7;
     opacity: 0;
-    transition: 3s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all 3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* mask circle to create crescent */
-.crescent::after {
-    content: "";
+.moon-texture {
     position: absolute;
-    top: 0;
-    left: 45px;
-    width: 170px;
-    height: 170px;
-    background: #554E94;
+    width: 100%;
+    height: 100%;
+    background:
+        radial-gradient(circle at 30% 30%, rgba(0,0,0,0.15), transparent 40%),
+        radial-gradient(circle at 70% 60%, rgba(0,0,0,0.12), transparent 50%),
+        radial-gradient(circle at 50% 80%, rgba(0,0,0,0.10), transparent 45%);
     border-radius: 50%;
 }
 
-.crescent.active {
+.moon.active {
     transform: translateX(-50%) translateY(-120px);
     opacity: 1;
 }
 
-.crescent.breath {
+.moon.glow {
+    background: #FAF8FB;
+    box-shadow: 0 0 60px rgba(250,248,251,0.8),
+                0 0 120px rgba(250,248,251,0.5);
+}
+
+.moon.breath {
     animation: moonBreath 6s infinite ease-in-out;
 }
 
@@ -115,31 +131,13 @@ body {
     100% { transform: translateX(-50%) translateY(-120px) scale(1); }
 }
 
-/* ========================== */
-/* MOSQUE SILHOUETTE */
-/* ========================== */
-
-.mosque {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    height: 20%;
-    background: #282131;
-    clip-path: polygon(
-        0% 100%, 0% 75%, 10% 65%, 15% 75%, 
-        20% 60%, 30% 75%, 40% 55%, 50% 75%, 
-        60% 60%, 70% 75%, 80% 65%, 85% 75%, 
-        100% 70%, 100% 100%
-    );
-}
-
-/* ========================== */
+/* ============================= */
 /* RAMADAN TEXT */
-/* ========================== */
+/* ============================= */
 
 .ramadan-container {
     position: absolute;
-    bottom: 20%;
+    bottom: 18%;
     width: 100%;
     text-align: center;
     opacity: 0;
@@ -149,15 +147,16 @@ body {
 
 .ramadan-text {
     font-family: 'Hurricane', cursive;
-    font-size: 70px;
+    font-size: 60px;
     color: #FAF8FB;
-    text-shadow: 0 0 25px rgba(250,248,251,0.9);
+    text-shadow: 0 0 20px rgba(250,248,251,0.8);
 }
 
 .timer {
-    margin-top: 15px;
+    margin-top: 10px;
     font-size: 22px;
     color: #FAF8FB;
+    text-shadow: 0 0 10px rgba(250,248,251,0.6);
 }
 
 .ramadan-container.show {
@@ -165,35 +164,35 @@ body {
     transform: translateY(0);
 }
 
-/* ========================== */
+/* ============================= */
 /* MESSAGE CARD */
-/* ========================== */
+/* ============================= */
 
 .message-card {
     position: absolute;
     top: 35%;
     left: 50%;
     transform: translate(-50%, 200px) scale(0.95);
-    width: 65%;
-    max-width: 750px;
+    width: 60%;
+    max-width: 700px;
     background: white;
-    border-radius: 40px;
-    padding: 50px;
+    border-radius: 35px;
+    padding: 40px;
     text-align: center;
-    box-shadow: 0 40px 80px rgba(0,0,0,0.6);
+    box-shadow: 0 25px 60px rgba(0,0,0,0.4);
     opacity: 0;
     transition: 2s ease;
 }
 
 .message-content p {
-    font-size: 21px;
+    font-size: 20px;
     color: #3B3331;
-    line-height: 1.9;
+    line-height: 1.8;
 }
 
 .gold {
     color: #D4AF37;
-    font-size: 26px;
+    font-size: 24px;
 }
 
 .message-card.show {
@@ -201,21 +200,24 @@ body {
     transform: translate(-50%, 0) scale(1);
 }
 
+/* floating breathing */
 .message-card.float {
-    animation: cardFloat 8s infinite ease-in-out;
+    animation: cardFloat 7s infinite ease-in-out;
 }
 
 @keyframes cardFloat {
     0% { transform: translate(-50%, 0) scale(1); }
-    50% { transform: translate(-50%, -12px) scale(1.03); }
+    50% { transform: translate(-50%, -10px) scale(1.03); }
     100% { transform: translate(-50%, 0) scale(1); }
 }
 
+/* hover interaction */
 .message-card:hover {
     animation: none;
     transform: translate(-50%, 0) scale(1.07);
 }
 
+/* reverse animation */
 .hide {
     opacity: 0 !important;
     transform: translate(-50%, 200px) scale(0.9) !important;
