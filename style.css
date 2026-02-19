@@ -1,0 +1,222 @@
+/* ========================== */
+/* RESET */
+/* ========================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    overflow: hidden;
+    height: 100vh;
+    font-family: 'Cormorant Garamond', serif;
+    background: #000;
+}
+
+/* ========================== */
+/* SKY - CINEMATIC */
+/* ========================== */
+
+.sky {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    background: radial-gradient(circle at 50% 20%, #5c56a8 0%, #554E94 40%, #4B4583 100%);
+    overflow: hidden;
+}
+
+/* cinematic soft moving haze */
+.sky::after {
+    content: "";
+    position: absolute;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle at 40% 30%, rgba(255,255,255,0.08), transparent 60%);
+    animation: skyBreath 18s infinite alternate ease-in-out;
+}
+
+@keyframes skyBreath {
+    0% { transform: scale(1); opacity: 0.3; }
+    100% { transform: scale(1.1); opacity: 0.6; }
+}
+
+/* ========================== */
+/* DRAMATIC STAR LAYERS */
+/* ========================== */
+
+.star-layer {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+.star-layer span {
+    position: absolute;
+    background: white;
+    border-radius: 50%;
+    opacity: 0;
+    animation: twinkle 4s infinite ease-in-out;
+}
+
+.layer1 span { animation-duration: 3s; }
+.layer2 span { animation-duration: 5s; }
+.layer3 span { animation-duration: 7s; }
+
+@keyframes twinkle {
+    0% { opacity: 0; transform: scale(0.5); }
+    50% { opacity: 1; transform: scale(1); }
+    100% { opacity: 0.4; }
+}
+
+/* ========================== */
+/* CRESCENT MOON */
+/* ========================== */
+
+.crescent {
+    position: absolute;
+    bottom: 18%;
+    left: 50%;
+    width: 170px;
+    height: 170px;
+    transform: translateX(-50%) translateY(250px);
+    border-radius: 50%;
+    background: #FAF8FB;
+    box-shadow: 0 0 40px rgba(250,248,251,0.6);
+    opacity: 0;
+    transition: 3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* mask circle to create crescent */
+.crescent::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 45px;
+    width: 170px;
+    height: 170px;
+    background: #554E94;
+    border-radius: 50%;
+}
+
+.crescent.active {
+    transform: translateX(-50%) translateY(-120px);
+    opacity: 1;
+}
+
+.crescent.breath {
+    animation: moonBreath 6s infinite ease-in-out;
+}
+
+@keyframes moonBreath {
+    0% { transform: translateX(-50%) translateY(-120px) scale(1); }
+    50% { transform: translateX(-50%) translateY(-120px) scale(1.05); }
+    100% { transform: translateX(-50%) translateY(-120px) scale(1); }
+}
+
+/* ========================== */
+/* MOSQUE SILHOUETTE */
+/* ========================== */
+
+.mosque {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 20%;
+    background: #282131;
+    clip-path: polygon(
+        0% 100%, 0% 75%, 10% 65%, 15% 75%, 
+        20% 60%, 30% 75%, 40% 55%, 50% 75%, 
+        60% 60%, 70% 75%, 80% 65%, 85% 75%, 
+        100% 70%, 100% 100%
+    );
+}
+
+/* ========================== */
+/* RAMADAN TEXT */
+/* ========================== */
+
+.ramadan-container {
+    position: absolute;
+    bottom: 20%;
+    width: 100%;
+    text-align: center;
+    opacity: 0;
+    transform: translateY(100px);
+    transition: 2s ease;
+}
+
+.ramadan-text {
+    font-family: 'Hurricane', cursive;
+    font-size: 70px;
+    color: #FAF8FB;
+    text-shadow: 0 0 25px rgba(250,248,251,0.9);
+}
+
+.timer {
+    margin-top: 15px;
+    font-size: 22px;
+    color: #FAF8FB;
+}
+
+.ramadan-container.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* ========================== */
+/* MESSAGE CARD */
+/* ========================== */
+
+.message-card {
+    position: absolute;
+    top: 35%;
+    left: 50%;
+    transform: translate(-50%, 200px) scale(0.95);
+    width: 65%;
+    max-width: 750px;
+    background: white;
+    border-radius: 40px;
+    padding: 50px;
+    text-align: center;
+    box-shadow: 0 40px 80px rgba(0,0,0,0.6);
+    opacity: 0;
+    transition: 2s ease;
+}
+
+.message-content p {
+    font-size: 21px;
+    color: #3B3331;
+    line-height: 1.9;
+}
+
+.gold {
+    color: #D4AF37;
+    font-size: 26px;
+}
+
+.message-card.show {
+    opacity: 1;
+    transform: translate(-50%, 0) scale(1);
+}
+
+.message-card.float {
+    animation: cardFloat 8s infinite ease-in-out;
+}
+
+@keyframes cardFloat {
+    0% { transform: translate(-50%, 0) scale(1); }
+    50% { transform: translate(-50%, -12px) scale(1.03); }
+    100% { transform: translate(-50%, 0) scale(1); }
+}
+
+.message-card:hover {
+    animation: none;
+    transform: translate(-50%, 0) scale(1.07);
+}
+
+.hide {
+    opacity: 0 !important;
+    transform: translate(-50%, 200px) scale(0.9) !important;
+}
