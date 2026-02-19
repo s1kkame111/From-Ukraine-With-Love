@@ -1,61 +1,34 @@
-/* ============================= */
+/* ========================== */
 /* RESET */
-/* ============================= */
+* { margin:0; padding:0; box-sizing:border-box; }
+body { overflow:hidden; height:100vh; font-family:'Cormorant Garamond', serif; }
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-body {
-    overflow: hidden;
-    height: 100vh;
-    font-family: 'Cormorant Garamond', serif;
-}
-
-/* ============================= */
+/* ========================== */
 /* SKY BACKGROUND */
-/* ============================= */
-
 .sky {
     position: relative;
     width: 100%;
     height: 100vh;
-    background: linear-gradient(
-        to bottom,
-        #4B4583 0%,
-        #554E94 40%,
-        #5c56a8 70%
-    );
-    overflow: hidden;
+    background: linear-gradient(to bottom, #4B4583 0%, #554E94 100%);
+    overflow:hidden;
 }
 
-/* subtle gradient glow overlay */
+/* subtle moving overlay */
 .sky::after {
-    content: "";
-    position: absolute;
-    width: 150%;
-    height: 150%;
+    content:"";
+    position:absolute;
+    width:200%; height:200%;
     background: radial-gradient(circle at 50% 20%, rgba(255,255,255,0.05), transparent 60%);
     animation: skyBreath 12s infinite alternate ease-in-out;
 }
+@keyframes skyBreath { 0%{opacity:0.4;} 100%{opacity:0.7;} }
 
-@keyframes skyBreath {
-    0% { opacity: 0.4; }
-    100% { opacity: 0.7; }
-}
-
-/* ============================= */
+/* ========================== */
 /* BUILDINGS */
-/* ============================= */
-
 .buildings {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    height: 18%;
-    background: #282131;
+    position:absolute;
+    bottom:0; width:100%; height:18%;
+    background:#282131;
     clip-path: polygon(
         0% 100%, 0% 70%, 8% 60%, 12% 70%, 
         18% 55%, 25% 70%, 33% 58%, 40% 75%,
@@ -64,161 +37,72 @@ body {
     );
 }
 
-/* ============================= */
+/* ========================== */
 /* STARS */
-/* ============================= */
-
 .stars span {
-    position: absolute;
-    background: white;
-    border-radius: 50%;
-    opacity: 0;
+    position:absolute;
+    background:white;
+    border-radius:50%;
+    opacity:0;
     animation: starFade 2s forwards ease-in-out;
 }
+@keyframes starFade { 0%{opacity:0;transform:scale(0.5);}50%{opacity:1;}100%{opacity:0.7;} }
 
-@keyframes starFade {
-    0% { opacity: 0; transform: scale(0.5); }
-    50% { opacity: 1; }
-    100% { opacity: 0.7; }
-}
-
-/* ============================= */
+/* ========================== */
 /* MOON */
-/* ============================= */
-
 .moon {
-    position: absolute;
-    bottom: 18%;
-    left: 50%;
-    transform: translateX(-50%) translateY(200px);
-    width: 160px;
-    height: 160px;
-    border-radius: 50%;
-    background: #B7B7B7;
-    opacity: 0;
-    transition: all 3s cubic-bezier(0.4, 0, 0.2, 1);
+    position:absolute;
+    bottom:18%;
+    left:50%;
+    width:160px; height:160px;
+    border-radius:50%;
+    background:#B7B7B7;
+    opacity:0;
+    transform:translateX(-50%) translateY(200px);
+    transition: all 3s cubic-bezier(0.4,0,0.2,1);
 }
-
 .moon-texture {
-    position: absolute;
-    width: 100%;
-    height: 100%;
+    position:absolute;
+    width:100%; height:100%;
     background:
         radial-gradient(circle at 30% 30%, rgba(0,0,0,0.15), transparent 40%),
         radial-gradient(circle at 70% 60%, rgba(0,0,0,0.12), transparent 50%),
         radial-gradient(circle at 50% 80%, rgba(0,0,0,0.10), transparent 45%);
-    border-radius: 50%;
+    border-radius:50%;
 }
+.moon.active { transform:translateX(-50%) translateY(-120px); opacity:1; }
+.moon.glow { background:#FAF8FB; box-shadow:0 0 60px rgba(250,248,251,0.8),0 0 120px rgba(250,248,251,0.5);}
+.moon.breath { animation: moonBreath 6s infinite ease-in-out; }
+@keyframes moonBreath { 0%{transform:translateX(-50%) translateY(-120px) scale(1);}50%{transform:translateX(-50%) translateY(-120px) scale(1.05);}100%{transform:translateX(-50%) translateY(-120px) scale(1);} }
 
-.moon.active {
-    transform: translateX(-50%) translateY(-120px);
-    opacity: 1;
-}
-
-.moon.glow {
-    background: #FAF8FB;
-    box-shadow: 0 0 60px rgba(250,248,251,0.8),
-                0 0 120px rgba(250,248,251,0.5);
-}
-
-.moon.breath {
-    animation: moonBreath 6s infinite ease-in-out;
-}
-
-@keyframes moonBreath {
-    0% { transform: translateX(-50%) translateY(-120px) scale(1); }
-    50% { transform: translateX(-50%) translateY(-120px) scale(1.05); }
-    100% { transform: translateX(-50%) translateY(-120px) scale(1); }
-}
-
-/* ============================= */
-/* RAMADAN TEXT */
-/* ============================= */
-
+/* ========================== */
+/* RAMADAN TEXT + TIMER */
 .ramadan-container {
-    position: absolute;
-    bottom: 18%;
-    width: 100%;
-    text-align: center;
-    opacity: 0;
-    transform: translateY(100px);
-    transition: 2s ease;
+    position:absolute; bottom:18%; width:100%; text-align:center;
+    opacity:0; transform:translateY(100px); transition:2s ease;
 }
-
 .ramadan-text {
-    font-family: 'Hurricane', cursive;
-    font-size: 60px;
-    color: #FAF8FB;
-    text-shadow: 0 0 20px rgba(250,248,251,0.8);
+    font-family:'Hurricane', cursive;
+    font-size:60px; color:#FAF8FB;
+    text-shadow:0 0 20px rgba(250,248,251,0.8);
 }
+.timer { margin-top:10px; font-size:22px; color:#FAF8FB; text-shadow:0 0 10px rgba(250,248,251,0.6); }
+.ramadan-container.show { opacity:1; transform:translateY(0); }
 
-.timer {
-    margin-top: 10px;
-    font-size: 22px;
-    color: #FAF8FB;
-    text-shadow: 0 0 10px rgba(250,248,251,0.6);
-}
-
-.ramadan-container.show {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-/* ============================= */
+/* ========================== */
 /* MESSAGE CARD */
-/* ============================= */
-
 .message-card {
-    position: absolute;
-    top: 35%;
-    left: 50%;
-    transform: translate(-50%, 200px) scale(0.95);
-    width: 60%;
-    max-width: 700px;
-    background: white;
-    border-radius: 35px;
-    padding: 40px;
-    text-align: center;
-    box-shadow: 0 25px 60px rgba(0,0,0,0.4);
-    opacity: 0;
-    transition: 2s ease;
+    position:absolute; top:35%; left:50%;
+    transform:translate(-50%,200px) scale(0.95);
+    width:60%; max-width:700px; background:white;
+    border-radius:35px; padding:40px; text-align:center;
+    box-shadow:0 25px 60px rgba(0,0,0,0.4);
+    opacity:0; transition:2s ease;
 }
-
-.message-content p {
-    font-size: 20px;
-    color: #3B3331;
-    line-height: 1.8;
-}
-
-.gold {
-    color: #D4AF37;
-    font-size: 24px;
-}
-
-.message-card.show {
-    opacity: 1;
-    transform: translate(-50%, 0) scale(1);
-}
-
-/* floating breathing */
-.message-card.float {
-    animation: cardFloat 7s infinite ease-in-out;
-}
-
-@keyframes cardFloat {
-    0% { transform: translate(-50%, 0) scale(1); }
-    50% { transform: translate(-50%, -10px) scale(1.03); }
-    100% { transform: translate(-50%, 0) scale(1); }
-}
-
-/* hover interaction */
-.message-card:hover {
-    animation: none;
-    transform: translate(-50%, 0) scale(1.07);
-}
-
-/* reverse animation */
-.hide {
-    opacity: 0 !important;
-    transform: translate(-50%, 200px) scale(0.9) !important;
-}
+.message-content p { font-size:20px; color:#3B3331; line-height:1.8; }
+.gold { color:#D4AF37; font-size:24px; }
+.message-card.show { opacity:1; transform:translate(-50%,0) scale(1); }
+.message-card.float { animation:cardFloat 7s infinite ease-in-out; }
+@keyframes cardFloat { 0%{transform:translate(-50%,0) scale(1);}50%{transform:translate(-50%,-10px) scale(1.03);}100%{transform:translate(-50%,0) scale(1);} }
+.message-card:hover { animation:none; transform:translate(-50%,0) scale(1.07); }
+.hide { opacity:0 !important; transform:translate(-50%,200px) scale(0.9) !important; }
