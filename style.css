@@ -1,0 +1,155 @@
+/* ========================== */
+/* RESET */
+* { margin:0; padding:0; box-sizing:border-box; }
+body { overflow:hidden; height:100vh; font-family:'Cormorant Garamond', serif; background:#4B4583; }
+
+/* ========================== */
+/* SKY */
+.sky {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    background: linear-gradient(to top, #4B4583 0%, #554E94 85%, #6A63B0 100%);
+    overflow:hidden;
+}
+.sky::after {
+    content:"";
+    position:absolute;
+    width:200%;
+    height:200%;
+    background: radial-gradient(circle at 50% 20%, rgba(255,255,255,0.05), transparent 60%);
+    animation: skyBreath 15s infinite alternate ease-in-out;
+}
+@keyframes skyBreath { 0%{opacity:0.4;}100%{opacity:0.7;} }
+
+/* ========================== */
+/* BUILDINGS */
+.buildings {
+    position:absolute;
+    bottom:0;
+    width:100%;
+    height:30%;
+    background:#282131;
+    clip-path: polygon(
+        0% 100%, 0% 50%, 5% 55%, 10% 45%, 15% 60%, 20% 50%,
+        25% 70%, 30% 55%, 35% 65%, 40% 50%, 45% 60%, 50% 55%,
+        55% 70%, 60% 60%, 65% 80%, 70% 55%, 75% 70%, 80% 50%,
+        85% 60%, 90% 55%, 95% 65%, 100% 50%, 100% 100%
+    );
+}
+
+/* ========================== */
+/* STARS */
+.stars span {
+    position:absolute;
+    background:white;
+    border-radius:50%;
+    opacity:0;
+    animation: starFade 2s forwards ease-in-out;
+}
+@keyframes starFade { 0%{opacity:0; transform:scale(0.3);}50%{opacity:1;}100%{opacity:0.7;} }
+
+/* ========================== */
+/* MOON */
+.moon {
+    position:absolute;
+    bottom:25%;
+    left:50%;
+    width:140px;
+    height:140px;
+    border-radius:50%;
+    background:#B7B7B7;
+    opacity:0;
+    transform:translateX(-50%) translateY(80px);
+    transition: all 3s cubic-bezier(0.4,0,0.2,1);
+    z-index:2;
+}
+.moon-texture {
+    position:absolute;
+    width:100%;
+    height:100%;
+    border-radius:50%;
+    background:
+        radial-gradient(circle at 30% 30%, rgba(0,0,0,0.15), transparent 40%),
+        radial-gradient(circle at 70% 60%, rgba(0,0,0,0.12), transparent 50%),
+        radial-gradient(circle at 50% 80%, rgba(0,0,0,0.10), transparent 45%);
+}
+.moon.active { transform:translateX(-50%) translateY(0px); opacity:1; }
+.moon.glow { background:#FAF8FB; box-shadow:0 0 50px rgba(250,248,251,0.6), 0 0 100px rgba(250,248,251,0.4);}
+.moon.breath { animation: moonBreath 6s infinite ease-in-out; }
+@keyframes moonBreath {
+    0%{transform:translateX(-50%) translateY(0) scale(1);}
+    50%{transform:translateX(-50%) translateY(-2px) scale(1.03);}
+    100%{transform:translateX(-50%) translateY(0) scale(1);}
+}
+
+/* ========================== */
+/* RAMADAN TEXT + TIMER */
+.ramadan-container {
+    position:absolute;
+    bottom:25%;
+    width:100%;
+    text-align:center;
+    opacity:0;
+    transform:translateY(100px);
+    transition:2s ease;
+    z-index:3;
+}
+.ramadan-text {
+    font-family:'Hurricane', cursive;
+    font-size:56px;
+    color:#FAF8FB;
+    text-shadow:0 0 18px rgba(250,248,251,0.7);
+}
+.timer {
+    margin-top:8px;
+    font-size:22px;
+    color:#FAF8FB;
+    text-shadow:0 0 12px rgba(250,248,251,0.5);
+}
+.ramadan-container.show { opacity:1; transform:translateY(0); }
+
+/* ========================== */
+/* MESSAGE CARD */
+.message-card {
+    position:absolute;
+    top:45%;
+    left:50%;
+    transform:translate(-50%,200px) scale(0.95);
+    width:50%;
+    max-width:600px;
+    background:white;
+    border-radius:25px;
+    padding:30px 40px;
+    text-align:center;
+    box-shadow:0 20px 50px rgba(0,0,0,0.35);
+    opacity:0;
+    transition:2s ease;
+    z-index:4;
+}
+.message-card.show {
+    opacity:1;
+    transform:translate(-50%,0) scale(1);
+    animation:cardFloat 7s ease-in-out infinite;
+}
+.message-card:hover { animation:none; transform:translate(-50%,0) scale(1.06);}
+.message-content p { font-size:20px; color:#3B3331; line-height:1.7; }
+.gold { color:#D4AF37; font-size:24px; }
+
+/* ========================== */
+/* FLOATING CARD ANIMATION */
+@keyframes cardFloat {
+    0%{transform:translate(-50%,0) scale(1);}
+    50%{transform:translate(-50%,-10px) scale(1.03);}
+    100%{transform:translate(-50%,0) scale(1);}
+}
+
+/* ========================== */
+/* REVERSE ANIMATION */
+.hide { opacity:0 !important; transform:translate(-50%,200px) scale(0.9) !important; }
+
+/* ========================== */
+/* BODY CLICKED EFFECT */
+body.clicked .message-card.show { transform:translate(-50%,200px) scale(0.9); opacity:0; transition:all 2.5s ease; }
+body.clicked .moon { transform:translateX(-50%) translateY(80px) scale(0.8); opacity:0; transition: all 2.5s ease; }
+body.clicked .ramadan-container.show { opacity:0; transform:translateY(100px); transition:2s ease; }
